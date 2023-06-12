@@ -64,25 +64,40 @@ ul li {
                 }
             }
         }
+        .todo-empty {
+            width: 400px;
+            margin: 0 auto;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            h2 {margin-bottom: 15px;}
+            p {width: 125x; margin: 0; color: #b6b6b6;
+            &:hover {color: #111;}
+            }
+        }
         .main_todo {
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 30px;
-            max-width: 750px;
+            max-width: 700px;
             margin: 0 auto;
             margin-top: 40px;
             padding-bottom: 10px;
             .todo_inner {
                 .todo_header {
                     padding: 15px 0;
+                    margin-bottom: 10px;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
                     .todo_header-inner {
                         display: flex;
                         align-items: center;
                         .header_list {
                             display: grid;
-                            grid-template-columns: 115px 130px 350px 125px;
+                            grid-template-columns: 130px 370px 120px;
                             text-align: center;
                             margin: 0;
+                            margin-left: 40px;
                             .header_list-item {
                                 font-size: 16px;
                                 font-weight: 600;
@@ -91,33 +106,40 @@ ul li {
                     }
                 }
                 .todo_list {
-                    .todo-empty {
-                        width: 400px;
-                        margin: 0 auto;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: column;
-                        h2 {margin-bottom: 15px;}
-                        p {width: 125x; margin: 0; color: #b6b6b6;
-                        &:hover {color: #111;}
-                        }
-                    }
                     .todo_list-item {
-                        margin-bottom: 20px;
+                        margin-bottom: 15px;
                         display: flex;
                         justify-content: center;
                         .todo_list-inner {
-                            width: 720px;
-                            padding: 10px 5px;
+                            width: 640px;
+                            padding: 10px;
                             display: grid;
-                            grid-template-columns: 90px 130px 370px 120px;
+                            grid-template-columns: 130px 370px 120px;
                             text-align: center;
-                            // display: flex;
-                            // justify-content: space-between;
                             align-items: center;
+                            box-shadow: 1px 1px 2px 1px #ccc;
                             p {margin: 0;}
-                            .checkbox {margin-left: 20px; cursor: pointer;}
+                            // .checkbox {margin-left: 20px; cursor: pointer;}
+                            .button_todo-done {
+                                    width: 28px;
+                                    margin-left: 60px;
+                                    height: 28px;
+                                    user-select: none;
+                                    outline: none;
+                                    border: 1px solid rgba(0, 0, 0, 0.1);
+                                    background: none;
+                                    border-radius: 100px;
+                                    font-size: 16px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    color: #000;
+                                    cursor: pointer;
+        
+                                    &:hover {
+                                        border: 1px solid rgba(0, 0, 0, 0.7);
+                                    }
+                            }
                             .todo__option {
                                 display: flex;
                                 .button_edit-todo {
@@ -139,9 +161,7 @@ ul li {
         
                                     &:hover {
                                         transform: scale(1.1);
-                                        border: none;
-                                        background: linear-gradient(90deg, #84a3fa 0%, #92f48f 100%);
-                                        color: #fff;
+                                        border: 1px solid rgba(0, 0, 0, 0.7);
                                     }
                                 }
                                 .button_delete-todo {
@@ -161,9 +181,7 @@ ul li {
             
                                     &:hover {
                                         transform: scale(1.1);
-                                        border: none;
-                                        background: linear-gradient(90deg, #84a3fa 0%, #92f48f 100%);
-                                        color: #fff;
+                                        border: 1px solid rgba(0, 0, 0, 0.7);
                                     }
                                 }
                             }

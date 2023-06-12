@@ -1,20 +1,25 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { FiMinus } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
+import { GoCheck } from "react-icons/go"
 
 import { v4 } from 'uuid';
 
 // 42 max символ or 40
 
 export const Todo = () => {
+    const [todo, setTodo] = useState(JSON.parse(localStorage.getItem('Todo')) || []);
     const [todoAdd, setTodoAdd] = useState('');
-    const [todo, setTodo] = useState([]);
     const [todoEdit, setTodoEdit] = useState(true);
     const [isMaxChars, setIsMaxChars] = useState(false);
     const [isEditItem, setIsEditItem] = useState(null);
     const inputRef = useRef(null);
 
+    useEffect(() => {
+        const json = JSON.stringify(todo)
+        localStorage.setItem('Todo', json)
+    }, [todo]);
 
     const todoInput = (e) => {
         setTodoAdd(e.target.value);
@@ -22,7 +27,7 @@ export const Todo = () => {
             setIsMaxChars(true);
         } else {
             setIsMaxChars(false);
-        } 
+        };
     };
 
     const inputStyle = {
@@ -42,7 +47,13 @@ export const Todo = () => {
             setTodo([...todo, newTodo]);
             setTodoAdd('');
         };
-    }
+    };
+
+    const editTask = (todo) => {
+        setIsEditItem(todo.id);
+        setTodoAdd(todo.text);
+        setTodoEdit(false);
+    };
 
     const buttonTodoEdit = (e) => {
         setTodo((obj) => 
@@ -53,13 +64,7 @@ export const Todo = () => {
         setIsEditItem(null);
         setTodoEdit(true);
         setTodoAdd('');
-    }
-
-    const editTask = (todo) => {
-        setIsEditItem(todo.id);
-        setTodoAdd(todo.text);
-        setTodoEdit(false);
-    }
+    };
 
     const deleteTask = (id) => {
         setTodo(todo.filter(todo => todo.id !== id));
@@ -69,13 +74,12 @@ export const Todo = () => {
     };
 
     const checkbox = (id) => {
-        // setCheckboxTodo(!checkboxTodo);
         setTodo((completeTodo) => 
-        completeTodo.map((task) => 
-            task.id === id ? { ...task, completed: !task.completed } : task
-        )
-    );
-    }
+            completeTodo.map((task) => 
+                task.id === id ? { ...task, completed: !task.completed } : task
+            )
+        );
+    };
 
     return (
         <div className='task_block container'>
@@ -89,12 +93,12 @@ export const Todo = () => {
                     }
                     <span>символов {todoAdd.length} / 30</span>
                 </div>
+                {todo.length === 0 ? <div className='todo-empty'><h2>В ваши заметках пока пусто</h2><p style={{cursor: 'pointer'}} onClick={() => inputRef.current.focus()}>Создать заметку</p></div> : (
                 <div className='main_todo'>
                     <div className='todo_inner'>
                     <div className='todo_header'>
                         <div className='todo_header-inner'>
                             <ul className='header_list'>
-                                <li className='header_list-item'>Time</li>
                                 <li className='header_list-item'>Done</li>
                                 <li className='header_list-item'>The note</li>
                                 <li className='header_list-item'>Manage notes</li>
@@ -102,13 +106,12 @@ export const Todo = () => {
                         </div>
                     </div>
                         <ul className='todo_list'>
-                        {todo.length === 0 ? <div className='todo-empty'><h2>В ваши заметках пока пусто</h2><p style={{cursor: 'pointer'}} onClick={() => inputRef.current.focus()}>Создать заметку</p></div> : (
+                        {
                             todo.map((todo) => (
                             <li className='todo_list-item' key={todo.id}>
                                 <div className='todo_list-inner'>
-                                <span>18:20</span>
                                     <div className='todo-done'>
-                                        <input className='checkbox' onClick={() => checkbox(todo.id)} type='checkbox'/>
+                                        <button  className='button_todo-done' onClick={() => checkbox(todo.id)}><GoCheck /></button>
                                     </div>
                                     <p style={todo.completed === true ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{todo.text}</p>
                                     <div className='todo__option'>
@@ -125,11 +128,12 @@ export const Todo = () => {
                                     </div>
                                 </div>
                             </li>
-                        ))
-                        )}
+                            ))
+                        }
                         </ul>
                     </div>
                 </div>
+                )}
             </div>
         </div>
     )
