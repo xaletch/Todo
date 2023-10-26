@@ -43,6 +43,7 @@ export const Todo = () => {
                 id: v4(),
                 text: todoAdd,
                 completed: false,
+                // time: new Date(),
             };
             setTodo([...todo, newTodo]);
             setTodoAdd('');
